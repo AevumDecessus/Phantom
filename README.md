@@ -1,3 +1,5 @@
+** Warning: This is very much a work in progress, and is prone to crashing **
+
 Directions for use:
 
 * Copy the contents to your scripts directory for PhantomBot and enable the module

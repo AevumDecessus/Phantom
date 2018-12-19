@@ -9,3 +9,5 @@ Directions for use:
 * Set your hospital name with ```!extralife hospital <NAME>```
 * Optionally set your Team ID with ```!extralife teamid <TEAMID>```
 * Optionally set to monitor all team donations instead of individual donations with ```!extralife toggleteamonly```
+
+Based on the [Extra Life module](https://github.com/willkillyaquick/PhantomBotModules) by willkillyaquick

@@ -1,3 +1,7 @@
+# PhantomBot Extra Life Module
+
+For use with [PhantomBot](https://phantombot.tv/)
+
 ** Warning: This is very much a work in progress, and is prone to crashing **
 
 Directions for use:

@@ -166,14 +166,13 @@
             var message = jsonObj[i].message;
             var donorName = jsonObj[i].displayName;
             var donationAmount = '$' + jsonObj[i].amount;
-            var createdOn = jsonObj[i].createdDateUTC.substring(0,19);
             var donorID = jsonObj[i].donorID;
-            if ($.inidb.exists('extralife', donorID + '_' + createdOn)) {
+            if ($.inidb.exists('extralife', donorID)) {
                 continue;
             }
             
             sayDonation(donationAmount, donorName, message, teamOnly);
-            $.setIniDbString('extralife', donorID + '_' + createdOn, String(donationAmount));
+            $.setIniDbString('extralife', donorID, String(donationAmount));
         }
     }
 
@@ -194,17 +193,16 @@
             var message = jsonObj[i].message;
             var donorName = jsonObj[i].displayName;
             var donationAmount = '$' + jsonObj[i].amount;
-            var createdOn = jsonObj[i].createdDateUTC.substring(0,19);
             var donorID = jsonObj[i].donorID;
 
-            if ($.inidb.exists('extralife', donorID + '_' + createdOn)) {
+            if ($.inidb.exists('extralife', donorID)) {
                 continue;
             } else {
-                $.consoleLn('NewDonation: ' + donorID + '_' + createdOn + '::' + donationAmount);
+                $.consoleLn('NewDonation: ' + donorID + '::' + donationAmount);
             }
             
             sayDonation(donationAmount, donorName, message, teamOnly);
-            $.setIniDbString('extralife', donorID + '_' + createdOn, String(donationAmount));
+            $.setIniDbString('extralife', donorID, String(donationAmount));
         }
     }
 
@@ -314,7 +312,7 @@
         if (donationAmount != '$null' && donationAmount != null) {
             mask += 1;
         }
-        if (donorName != 'null' && donorName != null) {
+        if (donorName != 'Anonymous') {
             mask += 2;
         }
         if (message != 'null' && message != null) {
@@ -363,12 +361,12 @@
             }
 
             if (args[0].equalsIgnoreCase('last') && isSetUp(sender) && !teamOnly) {
-                $.say(pullExtraLifeLastDonation());
+                pullExtraLifeLastDonation();
                 return;
             }
 
             if (args[0].equalsIgnoreCase('last') && isTeamSetup(sender) && teamOnly) {
-                $.say(pullExtraLifeLastTeamDonation());
+                pullExtraLifeLastTeamDonation();
                 return;
             }
 

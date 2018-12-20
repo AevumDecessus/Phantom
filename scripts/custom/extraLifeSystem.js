@@ -47,8 +47,7 @@
             check = false;
         }
         if (!$.inidb.exists('extralife','hospital')) {
-            str = str + ' Hospital Name is not setup. (!extralife hospital ____)';
-            check = false;
+            $.inidb.set('extralife','hospital','Local Childrens Hospitals');
         }
         if (!$.inidb.exists('extralife','emote')) {
             $.inidb.set('extralife','emote','<3');

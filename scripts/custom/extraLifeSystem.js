@@ -433,15 +433,15 @@
     $.bind('initReady', function() {
         if ($.bot.isModuleEnabled('./custom/extraLifeSystem.js')) {
             //$.inidb.RemoveFile('extralife');
-            $.registerChatCommand('./custom/extraLifeSystem.js', 'extralife', 7);
-            $.registerChatSubcommand('extralife', 'team', 7);
-            $.registerChatSubcommand('extralife', 'teamid', 0);
-            $.registerChatSubcommand('extralife', 'id', 0);
-            $.registerChatSubcommand('extralife', 'teamid', 0);
-            $.registerChatSubcommand('extralife', 'emote', 0);
-            $.registerChatSubcommand('extralife', 'hospital', 0);
-            $.registerChatSubcommand('extralife', 'teamonly', 0);
-            $.registerChatSubcommand('extralife', 'toggleteamonly', 0);
+            $.registerChatCommand('./custom/extraLifeSystem.js', 'els', 7);
+            $.registerChatSubcommand('els', 'team', 7);
+            $.registerChatSubcommand('els', 'teamid', 0);
+            $.registerChatSubcommand('els', 'id', 0);
+            $.registerChatSubcommand('els', 'teamid', 0);
+            $.registerChatSubcommand('els', 'emote', 0);
+            $.registerChatSubcommand('els', 'hospital', 0);
+            $.registerChatSubcommand('els', 'teamonly', 0);
+            $.registerChatSubcommand('els`', 'toggleteamonly', 0);
 
             setInterval(function() { pullExtraLifeDonationsInterval(); }, 15e3);
             setInterval(function() { pullExtraLifeTeamDonationsInterval(); }, 15e3);

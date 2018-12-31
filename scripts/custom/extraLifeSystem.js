@@ -38,22 +38,33 @@
     function isSetUp(sender){
         var str = $.whisperPrefix(sender);
         var check= true;
-        if (!$.inidb.exists('extralife','id')) {
-            str = str + ' ID is not setup. (!extralife id #) | ';
-            check = false;
-        }
-        if (!$.inidb.exists('extralife','nick')) {
-            str = str + ' Name is not setup. (!extralife nick ___) | ';
-            check = false;
-        }
+        // Set some defaults if they are not set
         if (!$.inidb.exists('extralife','hospital')) {
             $.inidb.set('extralife','hospital','Local Childrens Hospitals');
+            hospital = 'Local Childrens Hospital';
         }
         if (!$.inidb.exists('extralife','emote')) {
             $.inidb.set('extralife','emote','<3');
+            emote = '<3';
         }
         if (!$.inidb.exists('extralife','teamonly')) {
             $.setIniDbBoolean('extralife','teamonly',false);
+            teamOnly = false;
+        }
+        if (teamonly) {
+            if (!$.inidb.exists('extralife', 'teamid')) {
+                str = str + ' Team ID is not setup. (!extralife teamid #) | ';
+                check = false;
+            }
+        } else {
+            if (!$.inidb.exists('extralife','id')) {
+                str = str + ' ID is not setup. (!extralife id #) | ';
+                check = false;
+            }
+            if (!$.inidb.exists('extralife','nick')) {
+                str = str + ' Name is not setup. (!extralife nick ___) | ';
+                check = false;
+            }
         }
         if (!check) {
             $.say(str);
@@ -70,9 +81,13 @@
         if (!$.inidb.exists('extralife','teamonly')) {
             $.setIniDbBoolean('extralife','teamonly',false);
         }
-        if (!$.inidb.exists('extralife','teamid')) {
-            $.say($.whisperPrefix(sender) + ' Team id is not setup. (!extralife teamid #)');
-            return false;
+        if (teamonly) {
+            if (!$.inidb.exists('extralife','teamid')) {
+                $.say($.whisperPrefix(sender) + ' Team id is not setup. (!extralife teamid #)');
+                return false;
+            } else {
+                return true;
+            }
         } else {
             return true;
         }

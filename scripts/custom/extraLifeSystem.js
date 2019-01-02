@@ -30,6 +30,7 @@
     var hospital = $.inidb.get('extralife','hospital');
     var teamOnly = $.getIniDbBoolean('extralife', 'teamonly', false);
     var DEBUG = $.getIniDbBoolean('extralife', 'debug', false);
+    var customCommand = 'els';
 
     /**
      * @function isSetUp
@@ -372,7 +373,7 @@
             args = event.getArgs(),
             username = (args[0] ? args[0].toLowerCase() : false);
 
-        if (command.equalsIgnoreCase('extralife')) {        
+        if (command.equalsIgnoreCase(customCommand)) {        
             
             if (args.length == 0 && isSetUp(sender)) {
                 $.say($.lang.get('extralifesystem.extralife.say',nickName, hospital, extraLifeURL, emoteLove)); 
@@ -471,16 +472,16 @@
     $.bind('initReady', function() {
         if ($.bot.isModuleEnabled('./custom/extraLifeSystem.js')) {
             //$.inidb.RemoveFile('extralife');
-            $.registerChatCommand('./custom/extraLifeSystem.js', 'extralife', 7);
-            $.registerChatSubcommand('extralife', 'team', 7);
-            $.registerChatSubcommand('extralife', 'teamid', 0);
-            $.registerChatSubcommand('extralife', 'id', 0);
-            $.registerChatSubcommand('extralife', 'teamid', 0);
-            $.registerChatSubcommand('extralife', 'emote', 0);
-            $.registerChatSubcommand('extralife', 'hospital', 0);
-            $.registerChatSubcommand('extralife', 'teamonly', 0);
-            $.registerChatSubcommand('extralife', 'toggleteamonly', 0);
-            $.registerChatSubcommand('extralife', 'toggledebug', 0);
+            $.registerChatCommand('./custom/extraLifeSystem.js', customCommand, 7);
+            $.registerChatSubcommand(customCommand, 'team', 7);
+            $.registerChatSubcommand(customCommand, 'teamid', 0);
+            $.registerChatSubcommand(customCommand, 'id', 0);
+            $.registerChatSubcommand(customCommand, 'teamid', 0);
+            $.registerChatSubcommand(customCommand, 'emote', 0);
+            $.registerChatSubcommand(customCommand, 'hospital', 0);
+            $.registerChatSubcommand(customCommand, 'teamonly', 0);
+            $.registerChatSubcommand(customCommand, 'toggleteamonly', 0);
+            $.registerChatSubcommand(customCommand, 'toggledebug', 0);
 
             setInterval(function() { pullExtraLifeDonationsInterval(); }, 15e3);
             setInterval(function() { pullExtraLifeTeamDonationsInterval(); }, 15e3);

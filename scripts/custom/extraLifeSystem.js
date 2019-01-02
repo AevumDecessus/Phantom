@@ -28,6 +28,7 @@
     var emoteLove = $.inidb.get('extralife','emote');
     var hospital = $.inidb.get('extralife','hospital');
     var teamOnly = $.getIniDbBoolean('extralife', 'teamonly', false);
+    var DEBUG = $.getIniDbBoolean('extralife', 'debug', false);
 
     /**
      * @function isSetUp
@@ -184,7 +185,9 @@
             if ($.inidb.exists('extralife', donorID)) {
                 continue;
             } else {
-                $.consoleLn('NewDonation: ' + donorID + '::' + donationAmount);
+                if (DEBUG) {
+                    $.consoleLn('NewDonation: ' + donorID + '::' + donationAmount);
+                }
             }
             
             $.setIniDbString('extralife', donorID, String(donationAmount));
@@ -214,7 +217,9 @@
             if ($.inidb.exists('extralife', donorID)) {
                 continue;
             } else {
-                $.consoleLn('NewDonation: ' + donorID + '::' + donationAmount);
+                if (DEBUG) {
+                    $.consoleLn('NewTeamDonation: ' + donorID + '::' + donationAmount);
+                }
             }
             
             $.setIniDbString('extralife', donorID, String(donationAmount));
@@ -231,7 +236,9 @@
     */
     function sayDonation(donationAmount, donorName, message, isTeamDonation) {
         mask = getMessageMask(donationAmount, donorName, message);
-        $.consoleLn('Mask:' + mask + ' donationAmount:' + donationAmount + ' donorName:' + donorName + ' message:' + message);
+        if (DEBUG) {
+            $.consoleLn('Mask:' + mask + ' donationAmount:' + donationAmount + ' donorName:' + donorName + ' message:' + message);
+        }
         prefix = "";
         if (isTeamDonation) {
             prefix = "The team";
@@ -278,7 +285,9 @@
     */
     function sayLastDonation(donationAmount, donorName, message, isTeamDonation) {
         mask = getMessageMask(donationAmount, donorName, message);
-        $.consoleLn('Mask:' + mask + ' donationAmount:' + donationAmount + ' donorName:' + donorName + ' message:' + message);
+        if (DEBUG) {
+            $.consoleLn('Mask:' + mask + ' donationAmount:' + donationAmount + ' donorName:' + donorName + ' message:' + message);
+        }
         prefix = "";
         if (isTeamDonation) {
             prefix = "the team";
@@ -444,6 +453,13 @@
                 $.say($.lang.get('extralifesystem.teamonly.set',$.whisperPrefix(sender),teamOnly));
                 return;
             }
+
+            if (args[0].equalsIgnoreCase('toggledebug')) {
+                DEBUG = !DEBUG
+                $.setIniDbBoolean('extralife','debug',DEBUG)
+                $.say($.lang.get('extralifesystem.debug.set',$.whisperPrefix(sender),DEBUG));
+                return;
+            }
         }
 
     });
@@ -463,6 +479,7 @@
             $.registerChatSubcommand('extralife', 'hospital', 0);
             $.registerChatSubcommand('extralife', 'teamonly', 0);
             $.registerChatSubcommand('extralife', 'toggleteamonly', 0);
+            $.registerChatSubcommand('extralife', 'toggledebug', 0);
 
             setInterval(function() { pullExtraLifeDonationsInterval(); }, 15e3);
             setInterval(function() { pullExtraLifeTeamDonationsInterval(); }, 15e3);

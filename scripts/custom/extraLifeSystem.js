@@ -143,7 +143,7 @@
         
         var message = jsonObj[0].message;
         var donorName = jsonObj[0].displayName;
-        var donationAmount = '$' + jsonObj[0].amount;
+        var donationAmount = jsonObj[0].amount;
         return sayLastDonation(donationAmount , donorName, message, false);
     }
 
@@ -160,7 +160,7 @@
         
         var message = jsonObj[0].message;
         var donorName = jsonObj[0].displayName;
-        var donationAmount = '$' + jsonObj[0].amount;
+        var donationAmount = jsonObj[0].amount;
         return sayLastDonation(donationAmount , donorName, message, true);
     }
 
@@ -180,7 +180,7 @@
         for (var i = 0; i < jsonObj.length; i++) {
             var message = jsonObj[i].message;
             var donorName = jsonObj[i].displayName;
-            var donationAmount = '$' + jsonObj[i].amount;
+            var donationAmount = jsonObj[i].amount;
             var donorID = jsonObj[i].donorID;
             if ($.inidb.exists('extralife', donorID)) {
                 continue;
@@ -211,7 +211,7 @@
         for (var i = 0; i < jsonObj.length; i++) {
             var message = jsonObj[i].message;
             var donorName = jsonObj[i].displayName;
-            var donationAmount = '$' + jsonObj[i].amount;
+            var donationAmount = jsonObj[i].amount;
             var donorID = jsonObj[i].donorID;
 
             if ($.inidb.exists('extralife', donorID)) {

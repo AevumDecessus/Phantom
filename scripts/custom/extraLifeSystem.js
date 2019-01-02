@@ -51,7 +51,7 @@
             $.setIniDbBoolean('extralife','teamonly',false);
             teamOnly = false;
         }
-        if (teamonly) {
+        if (teamOnly) {
             if (!$.inidb.exists('extralife', 'teamid')) {
                 str = str + ' Team ID is not setup. (!extralife teamid #) | ';
                 check = false;
@@ -81,7 +81,7 @@
         if (!$.inidb.exists('extralife','teamonly')) {
             $.setIniDbBoolean('extralife','teamonly',false);
         }
-        if (teamonly) {
+        if (teamOnly) {
             if (!$.inidb.exists('extralife','teamid')) {
                 $.say($.whisperPrefix(sender) + ' Team id is not setup. (!extralife teamid #)');
                 return false;
@@ -167,7 +167,7 @@
      * @function pullExtraLifeDonations
      */
     function pullExtraLifeDonationsInterval() {
-        if (teamoOnly) {
+        if (teamOnly) {
             return;
         }
         var jsonObj = pullJSONData('participants/' + extraLifeID + '/donations');
@@ -183,10 +183,12 @@
             var donorID = jsonObj[i].donorID;
             if ($.inidb.exists('extralife', donorID)) {
                 continue;
+            } else {
+                $.consoleLn('NewDonation: ' + donorID + '::' + donationAmount);
             }
             
-            sayDonation(donationAmount, donorName, message, teamOnly);
             $.setIniDbString('extralife', donorID, String(donationAmount));
+            $.say(sayDonation(donationAmount, donorName, message, teamOnly));
         }
     }
 
@@ -215,8 +217,8 @@
                 $.consoleLn('NewDonation: ' + donorID + '::' + donationAmount);
             }
             
-            sayDonation(donationAmount, donorName, message, teamOnly);
             $.setIniDbString('extralife', donorID, String(donationAmount));
+            $.say(sayDonation(donationAmount, donorName, message, teamOnly));
         }
     }
 
@@ -238,31 +240,31 @@
         }
         switch(mask) {
             case 0:
-                $.say($.lang.get('extralifesystem.donation.0', prefix));
+                return $.lang.get('extralifesystem.donation.0', prefix);
                 break;
             case 1:
-                $.say($.lang.get('extralifesystem.donation.1', prefix, String(donationAmount)));
+                return $.lang.get('extralifesystem.donation.1', prefix, String(donationAmount));
                 break;
             case 2:
-                $.say($.lang.get('extralifesystem.donation.2', prefix, String(donorName)));
+                return $.lang.get('extralifesystem.donation.2', prefix, String(donorName));
                 break;
             case 3:
-                $.say($.lang.get('extralifesystem.donation.3', prefix, String(donationAmount), String(donorName)));
+                return $.lang.get('extralifesystem.donation.3', prefix, String(donationAmount), String(donorName));
                 break;
             case 4:
-                $.say($.lang.get('extralifesystem.donation.4', prefix, String(message)));
+                return $.lang.get('extralifesystem.donation.4', prefix, String(message));
                 break;
             case 5:
-                $.say($.lang.get('extralifesystem.donation.5', prefix, donationAmount, message));
+                return $.lang.get('extralifesystem.donation.5', prefix, donationAmount, message);
                 break;
             case 6:
-                $.say($.lang.get('extralifesystem.donation.6', prefix, donorName, message));
+                return $.lang.get('extralifesystem.donation.6', prefix, donorName, message);
                 break;
             case 7:
-                $.say($.lang.get('extralifesystem.donation.7', prefix, donationAmount, donorName, message));
+                return $.lang.get('extralifesystem.donation.7', prefix, donationAmount, donorName, message);
                 break;
             default:
-                $.say($.lang.get('extralifesystem.donation.7', prefix, donationAmount, donorName, message));
+                return $.lang.get('extralifesystem.donation.7', prefix, donationAmount, donorName, message);
                 break;
         }
     }
@@ -285,31 +287,31 @@
         }
         switch(mask) {
             case 0:
-                $.say($.lang.get('extralifesystem.lastdonation.0', prefix));
+                return $.lang.get('extralifesystem.lastdonation.0', prefix);
                 break;
             case 1:
-                $.say($.lang.get('extralifesystem.lastdonation.1', prefix, donationAmount));
+                return $.lang.get('extralifesystem.lastdonation.1', prefix, donationAmount);
                 break;
             case 2:
-                $.say($.lang.get('extralifesystem.lastdonation.2', prefix, donorName));
+                return $.lang.get('extralifesystem.lastdonation.2', prefix, donorName);
                 break;
             case 3:
-                $.say($.lang.get('extralifesystem.lastdonation.3', prefix, donationAmount, donorName));
+                return $.lang.get('extralifesystem.lastdonation.3', prefix, donationAmount, donorName);
                 break;
             case 4:
-                $.say($.lang.get('extralifesystem.lastdonation.4', prefix, message));
+                return $.lang.get('extralifesystem.lastdonation.4', prefix, message);
                 break;
             case 5:
-                $.say($.lang.get('extralifesystem.lastdonation.5', prefix, donationAmount, message));
+                return $.lang.get('extralifesystem.lastdonation.5', prefix, donationAmount, message);
                 break;
             case 6:
-                $.say($.lang.get('extralifesystem.lastdonation.6', prefix, donorName, message));
+                return $.lang.get('extralifesystem.lastdonation.6', prefix, donorName, message);
                 break;
             case 7:
-                $.say($.lang.get('extralifesystem.lastdonation.7', prefix, donationAmount, donorName, message));
+                return $.lang.get('extralifesystem.lastdonation.7', prefix, donationAmount, donorName, message);
                 break;
             default:
-                $.say($.lang.get('extralifesystem.lastdonation.7', prefix, donationAmount, donorName, message));
+                return $.lang.get('extralifesystem.lastdonation.7', prefix, donationAmount, donorName, message);
                 break;
         }
     }
@@ -329,7 +331,7 @@
         if (donorName != 'Anonymous') {
             mask += 2;
         }
-        if (message != 'null' && message != null) {
+        if (message != 'null' && message != null && message != "") {
             mask += 4;
         }
         return mask;
@@ -375,12 +377,16 @@
             }
 
             if (args[0].equalsIgnoreCase('last') && isSetUp(sender) && !teamOnly) {
-                pullExtraLifeLastDonation();
+                data = pullExtraLifeLastDonation();
+                $.cconsoleLn(data);
+                $.say(data);
                 return;
             }
 
             if (args[0].equalsIgnoreCase('last') && isTeamSetup(sender) && teamOnly) {
-                pullExtraLifeLastTeamDonation();
+                data = pullExtraLifeLastTeamDonation();
+                $.consoleLn("Last data::" + data);
+                $.say(data);
                 return;
             }
 

@@ -382,8 +382,12 @@
                 return;
             }
             
-            if (args[0].equalsIgnoreCase('goal') && isSetUp(sender)) {
+            if (args[0].equalsIgnoreCase('goal') && isSetUp(sender) && !teamOnly) {
                 $.say(pullExtraLifeTotalGoal());
+                return;
+            }
+            if (args[0].equalsIgnoreCase('goal') && isSetUp(sender) && teamOnly) {
+                $.say(pullExtraLifeTeamTotalGoal());
                 return;
             }
 
@@ -474,6 +478,7 @@
             //$.inidb.RemoveFile('extralife');
             $.registerChatCommand('./custom/extraLifeSystem.js', customCommand, 7);
             $.registerChatSubcommand(customCommand, 'team', 7);
+            $.registerChatSubcommand(customCommand, 'goal', 7);
             $.registerChatSubcommand(customCommand, 'teamid', 0);
             $.registerChatSubcommand(customCommand, 'id', 0);
             $.registerChatSubcommand(customCommand, 'teamid', 0);

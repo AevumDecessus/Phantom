@@ -9,6 +9,7 @@
  *
  * @author illusionaryone
  * Modded by Willkillyaquick
+ * Rewritten by AevumDecessus
  * REQUIRED LIBARY BELOW
  * ./scripts/lang/english/custom/custom-ExtraLife.js 
  *

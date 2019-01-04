@@ -30,6 +30,7 @@
     var hospital = $.inidb.get('extralife','hospital');
     var teamOnly = $.getIniDbBoolean('extralife', 'teamonly', false);
     var DEBUG = $.getIniDbBoolean('extralife', 'debug', false);
+    var enableGifAlert = $.getIniDbBoolean('extralife', 'gifalert', false);
     var customCommand = 'els';
 
     /**
@@ -53,6 +54,10 @@
         if (!$.inidb.exists('extralife','teamonly')) {
             $.setIniDbBoolean('extralife','teamonly',false);
             teamOnly = false;
+        }
+        if (!$.inidb.exists('extralife','gifalert')) {
+            $.setIniDbBoolean('extralife','gifalert',false);
+            enableGifAlert = false;
         }
         if (teamOnly) {
             if (!$.inidb.exists('extralife', 'teamid')) {
@@ -83,6 +88,11 @@
     function isTeamSetup(sender) {
         if (!$.inidb.exists('extralife','teamonly')) {
             $.setIniDbBoolean('extralife','teamonly',false);
+            teamOnly = false;
+        }
+        if (!$.inidb.exists('extralife','gifalert')) {
+            $.setIniDbBoolean('extralife','gifalert',false);
+            enableGifAlert = false;
         }
         if (teamOnly) {
             if (!$.inidb.exists('extralife','teamid')) {
@@ -193,7 +203,10 @@
             }
             
             $.setIniDbString('extralife', donorID, String(donationAmount));
-            $.say(sayDonation(donationAmount, donorName, message, teamOnly));
+            data = sayDonation(donationAmount, donorName, message, teamOnly);
+            $.say(data);
+            displayGifAlert(data);
+            }
         }
     }
 
@@ -225,10 +238,18 @@
             }
             
             $.setIniDbString('extralife', donorID, String(donationAmount));
-            $.say(sayDonation(donationAmount, donorName, message, teamOnly));
+            data = sayDonation(donationAmount, donorName, message, teamOnly);
+            $.say(data);
+            dislpayGifAlert(data);
         }
     }
 
+
+    function dislpayGifAlert(gifText) {
+        if (enableGifAlert) {
+            $.panelsocketserver.alertImage($.lang.get('extralifesystem.gifalert', gifText));
+        }
+    }
     /**
     * @function sayDonation
     * @param {string} donationAmount
@@ -393,7 +414,7 @@
 
             if (args[0].equalsIgnoreCase('last') && isSetUp(sender) && !teamOnly) {
                 data = pullExtraLifeLastDonation();
-                $.cconsoleLn(data);
+                $.consoleLn(data);
                 $.say(data);
                 return;
             }
@@ -401,6 +422,7 @@
             if (args[0].equalsIgnoreCase('last') && isTeamSetup(sender) && teamOnly) {
                 data = pullExtraLifeLastTeamDonation();
                 $.consoleLn("Last data::" + data);
+                $.panelsocketserver.alertImage($.lang.get('extralifesystem.gifalert', data));
                 $.say(data);
                 return;
             }
@@ -466,6 +488,13 @@
                 $.say($.lang.get('extralifesystem.debug.set',$.whisperPrefix(sender),DEBUG));
                 return;
             }
+
+            if (args[0].equalsIgnoreCase('togglegifalert')) {
+                enableGifAlert = !enableGifAlert
+                $.setIniDbBoolean('extralife','gifalert',enableGifAlert)
+                $.say($.lang.get('extralifesystem.gifalert.set',$.whisperPrefix(sender),enableGifAlert));
+                return;
+            }
         }
 
     });
@@ -487,6 +516,7 @@
             $.registerChatSubcommand(customCommand, 'teamonly', 0);
             $.registerChatSubcommand(customCommand, 'toggleteamonly', 0);
             $.registerChatSubcommand(customCommand, 'toggledebug', 0);
+            $.registerChatSubcommand(customCommand, 'togglegifalert', 0);
 
             setInterval(function() { pullExtraLifeDonationsInterval(); }, 15e3);
             setInterval(function() { pullExtraLifeTeamDonationsInterval(); }, 15e3);

@@ -393,7 +393,7 @@
 
             if (args[0].equalsIgnoreCase('last') && isSetUp(sender) && !teamOnly) {
                 data = pullExtraLifeLastDonation();
-                $.cconsoleLn(data);
+                $.consoleLn(data);
                 $.say(data);
                 return;
             }

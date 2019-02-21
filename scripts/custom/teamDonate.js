@@ -29,6 +29,13 @@
             }
             $.inidb.set('teamdonate', 'team', team);
             $.say($.lang.get('teamdonate.team_set', team));
+        } else if (command.equalsIgnoreCase('getteam')) {
+            if (!$.inidb.exists('teamdonate', 'team')) {
+                $.say($.lang.get('teamdonate.no_team_set'));
+                return
+            }
+            team = $.inidb.get('teamdonate', 'team');
+            $.say($.lang.get('teamdonate.current_team', team));
         } else if (command.equalsIgnoreCase('donate')) {
             if (!$.inidb.exists('teamdonate', 'team')) {
                 $.say($.lang.get('teamdonate.no_team_set'));
@@ -51,6 +58,7 @@
     $.bind('initReady', function() {
         if ($.bot.isModuleEnabled('./custom/teamDonate.js')) {
             $.registerChatCommand('./custom/teamDonate.js', 'donate', 7);
+            $.registerChatCommand('./custom/teamDonate.js', 'getteam', 2);
             $.registerChatCommand('./custom/teamDonate.js', 'setteam', 2);
         }
     });

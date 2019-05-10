@@ -27,3 +27,4 @@ $.lang.register('extralifesystem.pullextradonation.interval', 'Received a new do
 $.lang.register('extralifesystem.pullextrateamdonation.interval', 'The team received a new donation of $ $1 received from $2 with this message: $3. Please give them some $4!');
 $.lang.register('extralifesystem.pullextragoal.goal','$1 Extra Life Donation Total Raised / Goal: $ $2  /$ $3 . Thanks for all of the support!');
 $.lang.register('extralifesystem.pullextrateam.goal', '$1 is a part of the $2 team. Stats: Donation Total Raised / Goal: $ $3 /$ $4');
+$.lang.register('extralifesystem.gifalert', 'banana.gif,5,1,color:red;font-size:40px;width:19em;text-align:center;,$1');

@@ -4,6 +4,7 @@ $.lang.register('extralifesystem.emote.set','$1 Emote Set');
 $.lang.register('extralifesystem.hospital.set', '$1 Hospital Set');
 $.lang.register('extralifesystem.nick.set', '$1 Nick Name Set');
 $.lang.register('extralifesystem.debug.set', '$1 DEBUG Mode is set to $2');
+$.lang.register('extralifesystem.gifalert.set', '$1 Gif Alert Mode is set to $2');
 $.lang.register('extralifesystem.teamonly.set', '$1 Team Only Mode is set to $2');
 $.lang.register('extralifesystem.setid.updated', '$1 Has been updated!');
 $.lang.register('extralifesystem.setid.error', '$1 Has to be a number!');

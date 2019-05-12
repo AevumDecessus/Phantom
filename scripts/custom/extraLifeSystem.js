@@ -110,7 +110,7 @@
      * @function displayGiftAlert
      * @param {string} Alert Text
      */
-    function dislpayGifAlert(gifText) {
+    function displayGifAlert(gifText) {
         if (enableGifAlert) {
             $.panelsocketserver.alertImage($.lang.get('extralifesystem.gifalert', gifText));
         }
